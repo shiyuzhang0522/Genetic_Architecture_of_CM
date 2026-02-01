@@ -1,0 +1,36 @@
+############################################################
+# METAL input script for melanoma GWAS meta-analysis
+#
+# Cohorts included:
+#   - UK Biobank (UKBB)
+#   - FinnGen (R12)
+#   - Million Veteran Program (MVP)
+#
+# Analysis framework:
+#   Fixed-effect inverse-variance weighted (IVW) meta-analysis
+#   performed using METAL (standard error–based scheme)
+############################################################
+
+# === DESCRIBE AND PROCESS THE INPUT FILEs ===
+
+SCHEME STDERR
+GENOMICCONTROL ON
+AVERAGEFREQ ON
+MINMAXFREQ ON
+
+SEPARATOR  TAB
+MARKER MarkerID
+ALLELE effect_allele other_allele
+EFFECT beta
+STDERRLABEL standard_error
+PVALUE p_value 
+FREQLABEL effect_allele_frequency
+OUTFILE Meta.GWAS.melanoma .txt
+
+PROCESS /gpfs/hpc/home/zhangsy/Meta-GWAS/GWAS_summary/harmonized_GWAS/UKBB_meta.txt
+PROCESS /gpfs/hpc/home/zhangsy/Meta-GWAS/GWAS_summary/harmonized_GWAS/FinnGen_meta.txt
+PROCESS /gpfs/hpc/home/zhangsy/Meta-GWAS/GWAS_summary/harmonized_GWAS/MVP_meta.txt
+
+ANALYZE HETEROGENEITY
+
+QUIT
